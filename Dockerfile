@@ -14,7 +14,7 @@ RUN apt-get -y update && \
         mariadb-client \
         galera-arbitrator-4
 
-COPY bin/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY bin/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/docker-entrypoint.sh"]

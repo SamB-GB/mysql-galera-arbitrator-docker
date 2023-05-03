@@ -1,0 +1,33 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+env:
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_IMAGE: wowvendor/mariadb-galera-arbitrator
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log into GitHub Container Registry
+        run: echo ${{ secrets.GHCR_PACKAGES_TOKEN }} | docker login $DOCKER_REGISTRY -u ${{ secrets.GHCR_USER }} --password-stdin
+
+      - name: Build image
+        run: |
+          docker build . \
+            -t ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest \
+            -t ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${GITHUB_SHA::8}
+
+      - name: Push image to GitHub Container Registry
+        run: |
+          docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest
+          docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${GITHUB_SHA::8}

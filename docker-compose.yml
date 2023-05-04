@@ -13,3 +13,4 @@ services:
       - MARIADB_GALERA_CLUSTER_NAME=wowvendor_galera
       - MARIADB_ROOT_PASSWORD=change-me
       - MARIADB_ADDRESSES=db1,db2
+      - PROVIDER_OPTIONS=

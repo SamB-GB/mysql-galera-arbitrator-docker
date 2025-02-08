@@ -11,7 +11,7 @@ RUN apt-get -y update && \
         bash
 
 # Add MySQL GPG Key (correct method for Debian 11+)
-RUN wget -qO /etc/apt/trusted.gpg.d/mysql.asc https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+RUN curl -fsSL https://repo.mysql.com/RPM-GPG-KEY-mysql-2023 | tee /etc/apt/trusted.gpg.d/mysql.asc
 
 # Add MySQL repository
 RUN echo 'deb http://repo.mysql.com/apt/debian/ bookworm mysql-8.0' | tee /etc/apt/sources.list.d/mysql.list

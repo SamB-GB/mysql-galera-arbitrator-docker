@@ -20,7 +20,7 @@ RUN echo 'deb https://releases.galeracluster.com/galera-4.21/debian bookworm mai
 
 RUN apt-get -y update && \
     apt-get -y install \
-        mysql-client
+        mysql-client \
         galera-arbitrator-4
 
 COPY bin/docker-entrypoint.sh /docker-entrypoint.sh

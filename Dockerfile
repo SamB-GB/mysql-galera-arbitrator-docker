@@ -1,29 +1,30 @@
 FROM debian:bookworm
 
+# Install necessary dependencies
 RUN apt-get -y update && \
     apt-get -y install \
         apt-transport-https \
-        gnupg \ 
+        gnupg \
         curl \
         bash
 
-# Add MySQL GPG Key
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv 8DA84635
+# Add MySQL GPG Key (correct method for Debian 11+)
+RUN wget -qO /etc/apt/trusted.gpg.d/mysql.asc https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 
 # Add MySQL repository
-RUN curl -fsSL https://dev.mysql.com/doc/refman/8.0/en/checking-gpg-signature.html | grep "mysql_pubkey.asc" | \
-    xargs -I {} curl -o /etc/apt/trusted.gpg.d/mysql_pubkey.asc https://repo.mysql.com/RPM-GPG-KEY-mysql-2022 && \
-    echo 'deb http://repo.mysql.com/apt/debian/ bookworm mysql-8.0' | tee /etc/apt/sources.list.d/mysql.list
+RUN echo 'deb http://repo.mysql.com/apt/debian/ bookworm mysql-8.0' | tee /etc/apt/sources.list.d/mysql.list
 
 # Add Galera and MySQL WSREP repositories
 RUN echo 'deb https://releases.galeracluster.com/galera-4.21/debian bookworm main' | tee /etc/apt/sources.list.d/galera.list && \
     echo 'deb https://releases.galeracluster.com/mysql-wsrep-8.0.40-26.21/debian bookworm main' | tee -a /etc/apt/sources.list.d/galera.list
 
+# Update package list and install MySQL client + Galera Arbitrator
 RUN apt-get -y update && \
     apt-get -y install \
         mysql-client \
         galera-arbitrator-4
 
+# Copy and set entrypoint script
 COPY bin/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 

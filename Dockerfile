@@ -4,6 +4,8 @@ FROM debian:bookworm
 RUN apt-get -y update && \
     apt-get -y install \
         apt-transport-https \
+        wget \
+        curl \
         gnupg \
         curl \
         bash

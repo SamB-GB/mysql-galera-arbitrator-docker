@@ -3,6 +3,7 @@ FROM debian:bullseye
 RUN apt-get -y update && \
     apt-get -y install \
         apt-transport-https \
+        gnupg \ 
         curl \
         bash
 
@@ -20,7 +21,6 @@ RUN echo 'deb https://releases.galeracluster.com/galera-4.21/debian bookworm mai
 
 RUN apt-get -y update && \
     apt-get -y install \
-        gnupg \ 
         mysql-client \
         galera-arbitrator-4
 

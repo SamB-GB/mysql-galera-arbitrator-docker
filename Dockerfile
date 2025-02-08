@@ -16,6 +16,8 @@ RUN wget -qO /etc/apt/trusted.gpg.d/mysql.asc https://repo.mysql.com/RPM-GPG-KEY
 # Add MySQL repository
 RUN echo 'deb http://repo.mysql.com/apt/debian/ bookworm mysql-8.0' | tee /etc/apt/sources.list.d/mysql.list
 
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv 8DA84635
+
 # Add Galera and MySQL WSREP repositories
 RUN echo 'deb https://releases.galeracluster.com/galera-4.21/debian bookworm main' | tee /etc/apt/sources.list.d/galera.list && \
     echo 'deb https://releases.galeracluster.com/mysql-wsrep-8.0.40-26.21/debian bookworm main' | tee -a /etc/apt/sources.list.d/galera.list

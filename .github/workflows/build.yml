@@ -8,7 +8,7 @@ on:
 
 env:
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IMAGE: wowvendor/mariadb-galera-arbitrator
+  DOCKER_IMAGE: mysql-galera-arbitrator-docker
 
 jobs:
 

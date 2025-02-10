@@ -3,7 +3,7 @@ services:
   arbitrator:
     restart: on-failure:5
     ports:
-      - '4767:4567'
+      - '4567:4567'
     build:
       dockerfile: Dockerfile
       context: .
